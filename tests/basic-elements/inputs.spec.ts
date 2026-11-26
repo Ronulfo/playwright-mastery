@@ -1,4 +1,4 @@
-import {test, expect} from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 const FORM = {
   username: 'Maria',
@@ -10,21 +10,22 @@ const FORM = {
 };
 
 test.describe('Inputs', () => {
-  test.beforeEach(async ({page}) => {
+  test.beforeEach(async ({ page }) => {
     await page.goto('/basic/inputs');
   });
 
-  test('echoes the entered username below the field', async ({page}) => {
+  test('echoes the entered username below the field', async ({ page }) => {
     const username = page.getByLabel('Username');
 
     await username.fill(FORM.username);
 
     await expect(username).toHaveValue(FORM.username);
-    await expect(page.getByTestId('username-result'))
-      .toHaveText(`You entered: ${FORM.username}`);
+    await expect(page.getByTestId('username-result')).toHaveText(`You entered: ${FORM.username}`);
   });
 
-  test('updates the email, number, and date summaries when the form is filled', async ({page}) => {
+  test('updates the email, number, and date summaries when the form is filled', async ({
+    page,
+  }) => {
     const email = page.getByLabel('Email');
     const password = page.getByLabel('Password');
     const number = page.getByLabel('Number');
@@ -40,7 +41,7 @@ test.describe('Inputs', () => {
     await expect(page.getByTestId('result-date')).toHaveText(FORM.date);
   });
 
-  test('keeps the plain-text password out of the summary', async ({page}) => {
+  test('keeps the plain-text password out of the summary', async ({ page }) => {
     const password = page.getByLabel('Password');
     const passwordSummary = page.getByTestId('other-inputs-result');
 
@@ -50,8 +51,8 @@ test.describe('Inputs', () => {
     await expect(passwordSummary).not.toContainText(FORM.password);
   });
 
-  test('sets the range slider to 75 in the badge and summary', async ({page}) => {
-    const range = page.getByRole('slider', {name: /Range/});
+  test('sets the range slider to 75 in the badge and summary', async ({ page }) => {
+    const range = page.getByRole('slider', { name: /Range/ });
 
     await range.fill(FORM.range);
 
@@ -60,7 +61,7 @@ test.describe('Inputs', () => {
     await expect(page.getByTestId('result-range')).toHaveText(FORM.range);
   });
 
-  test('shows N/A in the summary after the email is cleared', async ({page}) => {
+  test('shows N/A in the summary after the email is cleared', async ({ page }) => {
     const email = page.getByLabel('Email');
 
     await email.fill(FORM.email);
